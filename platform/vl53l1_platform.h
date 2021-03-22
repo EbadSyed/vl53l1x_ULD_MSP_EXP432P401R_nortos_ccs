@@ -21,6 +21,12 @@ typedef struct {
 
 typedef VL53L1_Dev_t *VL53L1_DEV;
 
+uint8_t writeBuffer[10];
+uint8_t readBuffer[10];
+I2C_Params      i2cParams;
+I2C_Transaction i2cTransaction;
+
+
 /** @brief VL53L1_WriteMulti() definition.\n
  * To be implemented by the developer
  */

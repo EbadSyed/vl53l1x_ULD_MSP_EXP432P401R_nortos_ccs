@@ -1,7 +1,7 @@
 ******************************************************************************
                   TI ARM Linker Unix v20.2.2                   
 ******************************************************************************
->> Linked Mon Mar 22 17:47:17 2021
+>> Linked Mon Mar 22 19:56:00 2021
 
 OUTPUT FILE NAME:   <vl53l1x_ULD_MSP_EXP432P401R_nortos_ccs.out>
 ENTRY POINT SYMBOL: "resetISR"  address: 00004389

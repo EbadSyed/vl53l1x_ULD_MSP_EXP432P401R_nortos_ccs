@@ -54,7 +54,7 @@ int8_t VL53L1_WrByte(I2C_Handle i2c, uint16_t index, uint8_t data) {
     writeBuffer[1]=index  & 0xFF;
     writeBuffer[2]=data  & 0xFF;
 
-
+    i2cTransaction.slaveAddress = 0x29;
     i2cTransaction.writeBuf = writeBuffer;  /* Buffer to be written */
     i2cTransaction.writeCount = 3;          /* Number of bytes to be written */
     i2cTransaction.readBuf = NULL;          /* Buffer to be read */
@@ -73,7 +73,7 @@ int8_t VL53L1_WrWord(I2C_Handle i2c, uint16_t index, uint16_t data) {
     writeBuffer[2]=(data >> 8) & 0xFF;
     writeBuffer[3]=data  & 0xFF;
 
-
+    i2cTransaction.slaveAddress = 0x29;
     i2cTransaction.writeBuf = writeBuffer;  /* Buffer to be written */
     i2cTransaction.writeCount = 4;          /* Number of bytes to be written */
     i2cTransaction.readBuf = NULL;    /* Buffer to be read */
@@ -96,7 +96,7 @@ int8_t VL53L1_WrDWord(I2C_Handle i2c, uint16_t index, uint32_t data) {
     writeBuffer[4]=(data >> 8) & 0xFF;
     writeBuffer[5]=data & 0xFF;
 
-
+    i2cTransaction.slaveAddress = 0x29;
     i2cTransaction.writeBuf = writeBuffer;  /* Buffer to be written */
     i2cTransaction.writeCount = 6;          /* Number of bytes to be written */
     i2cTransaction.readBuf = NULL;    /* Buffer to be read */
@@ -109,9 +109,12 @@ int8_t VL53L1_WrDWord(I2C_Handle i2c, uint16_t index, uint32_t data) {
 
 int8_t VL53L1_RdByte(I2C_Handle i2c, uint16_t index, uint8_t *data) {
 
+    bool retVal;
+
     writeBuffer[0]=(index >> 8) & 0xFF;
     writeBuffer[1]=index  & 0xFF;
 
+    i2cTransaction.slaveAddress = 0x29;
     i2cTransaction.writeBuf = writeBuffer;  /* Buffer to be written */
     i2cTransaction.writeCount = 2;          /* Number of bytes to be written */
     i2cTransaction.readBuf = readBuffer;    /* Buffer to be read */
@@ -127,9 +130,13 @@ int8_t VL53L1_RdByte(I2C_Handle i2c, uint16_t index, uint8_t *data) {
 }
 
 int8_t VL53L1_RdWord(I2C_Handle i2c, uint16_t index, uint16_t *data) {
+
+    bool retVal;
+
     writeBuffer[0]=(index >> 8) & 0xFF;
     writeBuffer[1]=index  & 0xFF;
 
+    i2cTransaction.slaveAddress = 0x29;
     i2cTransaction.writeBuf = writeBuffer;  /* Buffer to be written */
     i2cTransaction.writeCount = 2;          /* Number of bytes to be written */
     i2cTransaction.readBuf = readBuffer;    /* Buffer to be read */
@@ -140,16 +147,19 @@ int8_t VL53L1_RdWord(I2C_Handle i2c, uint16_t index, uint16_t *data) {
          retVal = I2C_transfer(i2c, &i2cTransaction);
     } while(!retVal);
     *data = (readBuffer[0] << 8);
-    *data |= readBuffer[1]
+    *data |= readBuffer[1] ;
     //retVal = I2C_transfer(i2c, &i2cTransaction);
     return retVal;
 }
 
 int8_t VL53L1_RdDWord(I2C_Handle i2c, uint16_t index, uint32_t *data) {
 
+    bool retVal;
+
     writeBuffer[0]=(index >> 8) & 0xFF;
     writeBuffer[1]=index  & 0xFF;
 
+    i2cTransaction.slaveAddress = 0x29;
     i2cTransaction.writeBuf = writeBuffer;  /* Buffer to be written */
     i2cTransaction.writeCount = 2;          /* Number of bytes to be written */
     i2cTransaction.readBuf = readBuffer;    /* Buffer to be read */
