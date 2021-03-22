@@ -38,6 +38,7 @@
 
 /* TI-Drivers Header files */
 #include <ti/drivers/GPIO.h>
+#include <ti/drivers/I2C.h>
 
 /* Display Header files */
 #include <ti/display/Display.h>
@@ -47,6 +48,11 @@
 
 static Display_Handle display;
 
+
+I2C_Handle      i2c1;
+I2C_Params      i2cParams;
+I2C_Transaction i2cTransaction;
+
 /*
  *  ======== mainThread ========
  */
@@ -54,11 +60,21 @@ void *mainThread(void *arg0)
 {
 
     GPIO_init();
+    I2C_init();
     Display_init();
 
     /* Open the HOST display for output */
     display = Display_open(Display_Type_UART, NULL);
     if (display == NULL) {
+        while (1);
+    }
+
+    /* Create I2C for usage */
+    I2C_Params_init(&i2cParams);
+    i2cParams.bitRate = I2C_400kHz;
+
+    i2c1 = I2C_open(CONFIG_I2C_1, &i2cParams);
+    if (i2c1 == NULL) {
         while (1);
     }
 

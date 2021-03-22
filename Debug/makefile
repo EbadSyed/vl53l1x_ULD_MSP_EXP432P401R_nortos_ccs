@@ -11,6 +11,9 @@ ORDERED_OBJS += \
 "./syscfg/ti_drivers_config.obj" \
 "./main_nortos.obj" \
 "./vl53l1.obj" \
+"./core/VL53L1X_api.obj" \
+"./core/VL53L1X_calibration.obj" \
+"./platform/vl53l1_platform.obj" \
 "../MSP_EXP432P401R_NoRTOS.cmd" \
 $(GEN_CMDS__FLAG) \
 -l"ti/display/lib/display.aem4f" \
@@ -30,7 +33,11 @@ RMDIR := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir_vars.mk
+-include core/subdir_vars.mk
+-include platform/subdir_vars.mk
 -include subdir_rules.mk
+-include core/subdir_rules.mk
+-include platform/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -161,8 +168,8 @@ vl53l1x_ULD_MSP_EXP432P401R_nortos_ccs.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(GEN_MISC_FILES__QUOTED)$(BIN_OUTPUTS__QUOTED)$(GEN_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "syscfg/ti_drivers_config.obj" "main_nortos.obj" "vl53l1.obj" 
-	-$(RM) "syscfg/ti_drivers_config.d" "main_nortos.d" "vl53l1.d" 
+	-$(RM) "syscfg/ti_drivers_config.obj" "main_nortos.obj" "vl53l1.obj" "core/VL53L1X_api.obj" "core/VL53L1X_calibration.obj" "platform/vl53l1_platform.obj" 
+	-$(RM) "syscfg/ti_drivers_config.d" "main_nortos.d" "vl53l1.d" "core/VL53L1X_api.d" "core/VL53L1X_calibration.d" "platform/vl53l1_platform.d" 
 	-$(RMDIR) $(GEN_MISC_DIRS__QUOTED)
 	-@echo 'Finished clean'
 	-@echo ' '

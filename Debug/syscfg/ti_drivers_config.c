@@ -91,6 +91,54 @@ const GPIOMSP432_Config GPIOMSP432_config = {
 
 
 /*
+ *  =============================== I2C ===============================
+ */
+
+#include <ti/drivers/I2C.h>
+#include <ti/drivers/i2c/I2CMSP432.h>
+
+#include <ti/devices/msp432p4xx/inc/msp.h>
+#include <ti/devices/msp432p4xx/driverlib/interrupt.h>
+#include <ti/devices/msp432p4xx/driverlib/i2c.h>
+
+#define CONFIG_I2C_COUNT 1
+
+/*
+ *  ======== i2cMSP432Objects ========
+ */
+I2CMSP432_Object i2cMSP432Objects[CONFIG_I2C_COUNT];
+
+/*
+ *  ======== i2cMSP432HWAttrs ========
+ */
+const I2CMSP432_HWAttrsV1 i2cMSP432HWAttrs[CONFIG_I2C_COUNT] = {
+    /* CONFIG_I2C_1 */
+    {
+        .baseAddr = EUSCI_B1_BASE,
+        .intNum = INT_EUSCIB1,
+        .intPriority = (~0),
+        .clockSource = EUSCI_B_I2C_CLOCKSOURCE_SMCLK,
+        .dataPin = I2CMSP432_P6_4_UCB1SDA,
+        .clkPin  = I2CMSP432_P6_5_UCB1SCL
+    },
+};
+
+/*
+ *  ======== I2C_config ========
+ */
+const I2C_Config I2C_config[CONFIG_I2C_COUNT] = {
+    /* CONFIG_I2C_1 */
+    {
+        .fxnTablePtr = &I2CMSP432_fxnTable,
+        .object = &i2cMSP432Objects[CONFIG_I2C_1],
+        .hwAttrs = &i2cMSP432HWAttrs[CONFIG_I2C_1]
+    },
+};
+
+const uint_least8_t I2C_count = CONFIG_I2C_COUNT;
+
+
+/*
  *  =============================== Power ===============================
  */
 
