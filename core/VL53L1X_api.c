@@ -203,6 +203,152 @@ static const uint8_t status_rtn[24] = { 255, 255, 255, 5, 2, 4, 1, 7, 3, 0,
 	255, 255, 11, 12
 };
 
+int8_t VL53L1_WriteMulti( I2C_Handle i2c, uint16_t index, uint8_t *pdata, uint32_t count) {
+    return 0; // to be implemented
+}
+
+int8_t VL53L1_ReadMulti(I2C_Handle i2c, uint16_t index, uint8_t *pdata, uint32_t count){
+    return 0; // to be implemented
+}
+
+int8_t VL53L1_WrByte(I2C_Handle i2c, uint16_t index, uint8_t data) {
+
+    bool status;
+
+    writeBuffer[0]=(index >> 8) & 0xFF;
+    writeBuffer[1]=index  & 0xFF;
+    writeBuffer[2]=data  & 0xFF;
+
+    i2cTransaction.slaveAddress = 0x29;
+    i2cTransaction.writeBuf = writeBuffer;  /* Buffer to be written */
+    i2cTransaction.writeCount = 3;          /* Number of bytes to be written */
+    i2cTransaction.readBuf = NULL;          /* Buffer to be read */
+    i2cTransaction.readCount = 0;           /* Number of bytes to be read */
+
+    status = I2C_transfer(i2c, &i2cTransaction); /* Perform I2C transfer */
+    return status;
+}
+
+int8_t VL53L1_WrWord(I2C_Handle i2c, uint16_t index, uint16_t data) {
+
+    bool status;
+
+    writeBuffer[0]=(index >> 8) & 0xFF;
+    writeBuffer[1]=index  & 0xFF;
+    writeBuffer[2]=(data >> 8) & 0xFF;
+    writeBuffer[3]=data  & 0xFF;
+
+    i2cTransaction.slaveAddress = 0x52;
+    i2cTransaction.writeBuf = writeBuffer;  /* Buffer to be written */
+    i2cTransaction.writeCount = 4;          /* Number of bytes to be written */
+    i2cTransaction.readBuf = NULL;    /* Buffer to be read */
+    i2cTransaction.readCount = 0;           /* Number of bytes to be read */
+
+    status = I2C_transfer(i2c, &i2cTransaction); /* Perform I2C transfer */
+
+    return status;
+
+}
+
+int8_t VL53L1_WrDWord(I2C_Handle i2c, uint16_t index, uint32_t data) {
+
+    bool status;
+
+    writeBuffer[0]=(index >> 8) & 0xFF;
+    writeBuffer[1]=index  & 0xFF;
+    writeBuffer[2]=(data >> 24) & 0xFF;
+    writeBuffer[3]=(data >> 16) & 0xFF;
+    writeBuffer[4]=(data >> 8) & 0xFF;
+    writeBuffer[5]=data & 0xFF;
+
+    i2cTransaction.slaveAddress = 0x52;
+    i2cTransaction.writeBuf = writeBuffer;  /* Buffer to be written */
+    i2cTransaction.writeCount = 6;          /* Number of bytes to be written */
+    i2cTransaction.readBuf = NULL;    /* Buffer to be read */
+    i2cTransaction.readCount = 0;           /* Number of bytes to be read */
+
+    status = I2C_transfer(i2c, &i2cTransaction); /* Perform I2C transfer */
+
+    return status;
+}
+
+int8_t VL53L1_RdByte(I2C_Handle i2c, uint16_t index, uint8_t *data) {
+
+    bool retVal;
+
+    writeBuffer[0]=(index >> 8) & 0xFF;
+    writeBuffer[1]=index  & 0xFF;
+
+    i2cTransaction.slaveAddress = 0x29;
+    i2cTransaction.writeBuf = writeBuffer;  /* Buffer to be written */
+    i2cTransaction.writeCount = 2;          /* Number of bytes to be written */
+    i2cTransaction.readBuf = readBuffer;    /* Buffer to be read */
+    i2cTransaction.readCount = 1;           /* Number of bytes to be read */
+
+    /* Re-try writing to slave till I2C_transfer returns true */
+    do {
+         retVal = I2C_transfer(i2c, &i2cTransaction);
+    } while(!retVal);
+    *data = readBuffer[0];
+
+    //retVal = I2C_transfer(i2c, &i2cTransaction);
+    return retVal;
+}
+
+int8_t VL53L1_RdWord(I2C_Handle i2c, uint16_t index, uint16_t *data) {
+
+    bool retVal;
+
+    writeBuffer[0]=(index >> 8) & 0xFF;
+    writeBuffer[1]=index  & 0xFF;
+
+    i2cTransaction.slaveAddress = 0x29;
+    i2cTransaction.writeBuf = writeBuffer;  /* Buffer to be written */
+    i2cTransaction.writeCount = 2;          /* Number of bytes to be written */
+    i2cTransaction.readBuf = readBuffer;    /* Buffer to be read */
+    i2cTransaction.readCount = 2;           /* Number of bytes to be read */
+
+    /* Re-try writing to slave till I2C_transfer returns true */
+    do {
+         retVal = I2C_transfer(i2c, &i2cTransaction);
+    } while(!retVal);
+    *data = (readBuffer[0] << 8);
+    *data |= readBuffer[1] ;
+    //retVal = I2C_transfer(i2c, &i2cTransaction);
+    return retVal;
+}
+
+int8_t VL53L1_RdDWord(I2C_Handle i2c, uint16_t index, uint32_t *data) {
+
+    bool retVal;
+
+    writeBuffer[0]=(index >> 8) & 0xFF;
+    writeBuffer[1]=index  & 0xFF;
+
+    i2cTransaction.slaveAddress = 0x29;
+    i2cTransaction.writeBuf = writeBuffer;  /* Buffer to be written */
+    i2cTransaction.writeCount = 2;          /* Number of bytes to be written */
+    i2cTransaction.readBuf = readBuffer;    /* Buffer to be read */
+    i2cTransaction.readCount = 4;           /* Number of bytes to be read */
+
+    /* Re-try writing to slave till I2C_transfer returns true */
+    do {
+         retVal = I2C_transfer(i2c, &i2cTransaction);
+    } while(!retVal);
+
+    *data = (readBuffer[0] << 24);
+    *data |= (readBuffer[1] << 16);
+    *data |= (readBuffer[2] << 8);
+    *data |= (readBuffer[3] << 0);
+
+    //retVal = I2C_transfer(i2c, &i2cTransaction);
+    return retVal;
+}
+
+int8_t VL53L1_WaitMs(I2C_Handle i2c, int32_t wait_ms){
+    return 0; // to be implemented
+}
+
 VL53L1X_ERROR VL53L1X_GetSWVersion(VL53L1X_Version_t *pVersion)
 {
 	VL53L1X_ERROR Status = 0;
@@ -226,6 +372,7 @@ VL53L1X_ERROR VL53L1X_SensorInit(I2C_Handle i2c)
 {
 	VL53L1X_ERROR status = 0;
 	uint8_t Addr = 0x00, tmp;
+
 
 	for (Addr = 0x2D; Addr <= 0x87; Addr++){
 		status = VL53L1_WrByte(i2c, Addr, VL51L1X_DEFAULT_CONFIGURATION[Addr - 0x2D]);
@@ -297,7 +444,7 @@ VL53L1X_ERROR VL53L1X_CheckForDataReady(I2C_Handle i2c, uint8_t *isDataReady)
 	status = VL53L1X_GetInterruptPolarity(i2c, &IntPol);
 	status = VL53L1_RdByte(i2c, GPIO__TIO_HV_STATUS, &Temp);
 	/* Read in the register to check if a new value is available */
-	if (status == 0){
+	if (status == 1){
 		if ((Temp & 1) == IntPol)
 			*isDataReady = 1;
 		else
@@ -455,7 +602,7 @@ VL53L1X_ERROR VL53L1X_SetDistanceMode(I2C_Handle i2c, uint16_t DM)
 	VL53L1X_ERROR status = 0;
 
 	status = VL53L1X_GetTimingBudgetInMs(i2c, &TB);
-	if (status != 0)
+	if (status != 1)
 		return 1;
 	switch (DM) {
 	case 1:
@@ -479,7 +626,7 @@ VL53L1X_ERROR VL53L1X_SetDistanceMode(I2C_Handle i2c, uint16_t DM)
 		break;
 	}
 
-	if (status == 0)
+	if (status == 1)
 		status = VL53L1X_SetTimingBudgetInMs(i2c, TB);
 	return status;
 }

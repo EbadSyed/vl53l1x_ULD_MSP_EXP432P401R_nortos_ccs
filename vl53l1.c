@@ -38,20 +38,12 @@
 
 /* TI-Drivers Header files */
 #include <ti/drivers/GPIO.h>
-#include <ti/drivers/I2C.h>
 
-/* Display Header files */
-#include <ti/display/Display.h>
+#include "core/VL53L1X_api.h"
 
 /* Driver Configuration */
 #include "ti_drivers_config.h"
 
-static Display_Handle display;
-
-
-I2C_Handle      i2c1;
-I2C_Params      i2cParams;
-I2C_Transaction i2cTransaction;
 
 /*
  *  ======== mainThread ========
@@ -78,10 +70,12 @@ void *mainThread(void *arg0)
         while (1);
     }
 
+    VL53L1X_SensorInit(i2c1);
+
 
     GPIO_write(CONFIG_GPIO_LED_0, CONFIG_GPIO_LED_ON);
 
-    Display_printf(display, 0, 0, "Sanity Check\n");
+    Display_printf(display, 0, 0, "Program Fixed Check\n");
 
 
     /* Loop forever, alternating LED state and Display output. */

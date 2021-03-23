@@ -144,15 +144,13 @@ const uint_least8_t I2C_count = CONFIG_I2C_COUNT;
 
 #include <ti/drivers/Power.h>
 #include <ti/drivers/power/PowerMSP432.h>
-extern void PowerMSP432_initPolicy(void);
-extern void PowerMSP432_sleepPolicy(void);
 
 const PowerMSP432_ConfigV1 PowerMSP432_config = {
-    .policyInitFxn         = PowerMSP432_initPolicy,
-    .policyFxn             = PowerMSP432_sleepPolicy,
-    .initialPerfLevel      = 2,
-    .enablePolicy          = true,
-    .enablePerf            = true,
+    .policyInitFxn         = NULL,
+    .policyFxn             = NULL,
+    .initialPerfLevel      = 0,
+    .enablePolicy          = false,
+    .enablePerf            = false,
     .enableParking         = false,
     .resumeShutdownHookFxn = NULL,
     .customPerfLevels      = NULL,
@@ -186,9 +184,6 @@ UARTMSP432_Object uartMSP432Objects[CONFIG_UART_COUNT];
 static const UARTMSP432_BaudrateConfig uartMSP432Baudrates[] = {
     /* {baudrate, input clock, prescalar, UCBRFx, UCBRSx, oversampling} */
     { 115200, 3000000, 1, 10, 0, 1 },
-    { 115200, 6000000, 3, 4, 2, 1 },
-    { 115200, 12000000, 6, 8, 32, 1 },
-    { 115200, 24000000, 13, 0, 37, 1 },
 };
 
 static unsigned char uartMSP432RingBuffer0[32];

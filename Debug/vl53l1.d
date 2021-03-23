@@ -15,6 +15,7 @@ vl53l1.obj: /home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/kernel/nortos/posix
 vl53l1.obj: /home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/kernel/nortos/posix/sys/types.h
 vl53l1.obj: /home/ebad/ti/ccs1020/ccs/tools/compiler/ti-cgt-arm_20.2.2.LTS/include/stddef.h
 vl53l1.obj: /home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/GPIO.h
+vl53l1.obj: ../core/VL53L1X_api.h
 vl53l1.obj: /home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/I2C.h
 vl53l1.obj: /home/ebad/ti/ccs1020/ccs/tools/compiler/ti-cgt-arm_20.2.2.LTS/include/stdbool.h
 vl53l1.obj: /home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/display/Display.h
@@ -37,6 +38,7 @@ vl53l1.obj: /home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/D
 /home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/kernel/nortos/posix/sys/types.h: 
 /home/ebad/ti/ccs1020/ccs/tools/compiler/ti-cgt-arm_20.2.2.LTS/include/stddef.h: 
 /home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/GPIO.h: 
+../core/VL53L1X_api.h: 
 /home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/I2C.h: 
 /home/ebad/ti/ccs1020/ccs/tools/compiler/ti-cgt-arm_20.2.2.LTS/include/stdbool.h: 
 /home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/display/Display.h: 

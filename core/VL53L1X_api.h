@@ -65,10 +65,13 @@
  * @brief Functions definition
  */
 
+#include <stdint.h>
+#include <ti/drivers/I2C.h>
+#include <ti/display/Display.h>
+
 #ifndef _API_H_
 #define _API_H_
 
-#include "vl53l1_platform.h"
 
 #define VL53L1X_IMPLEMENTATION_VER_MAJOR       3
 #define VL53L1X_IMPLEMENTATION_VER_MINOR       5
@@ -118,6 +121,90 @@ typedef int8_t VL53L1X_ERROR;
 #define VL53L1_FIRMWARE__SYSTEM_STATUS                      0x00E5
 #define VL53L1_IDENTIFICATION__MODEL_ID                     0x010F
 #define VL53L1_ROI_CONFIG__MODE_ROI_CENTRE_SPAD				0x013E
+
+
+typedef struct {
+    uint32_t dummy;
+} VL53L1_Dev_t;
+
+typedef VL53L1_Dev_t *VL53L1_DEV;
+
+uint8_t writeBuffer[10];
+uint8_t readBuffer[10];
+
+I2C_Handle      i2c1;
+I2C_Params      i2cParams;
+I2C_Transaction i2cTransaction;
+
+
+Display_Handle display;
+
+
+/** @brief VL53L1_WriteMulti() definition.\n
+ * To be implemented by the developer
+ */
+int8_t VL53L1_WriteMulti(
+        I2C_Handle i2c,
+        uint16_t      index,
+        uint8_t      *pdata,
+        uint32_t      count);
+/** @brief VL53L1_ReadMulti() definition.\n
+ * To be implemented by the developer
+ */
+int8_t VL53L1_ReadMulti(
+        I2C_Handle    i2c,
+        uint16_t      index,
+        uint8_t      *pdata,
+        uint32_t      count);
+/** @brief VL53L1_WrByte() definition.\n
+ * To be implemented by the developer
+ */
+int8_t VL53L1_WrByte(
+        I2C_Handle i2c,
+        uint16_t      index,
+        uint8_t       data);
+/** @brief VL53L1_WrWord() definition.\n
+ * To be implemented by the developer
+ */
+int8_t VL53L1_WrWord(
+        I2C_Handle i2c,
+        uint16_t      index,
+        uint16_t      data);
+/** @brief VL53L1_WrDWord() definition.\n
+ * To be implemented by the developer
+ */
+int8_t VL53L1_WrDWord(
+        I2C_Handle i2c,
+        uint16_t      index,
+        uint32_t      data);
+/** @brief VL53L1_RdByte() definition.\n
+ * To be implemented by the developer
+ */
+int8_t VL53L1_RdByte(
+        I2C_Handle i2c,
+        uint16_t      index,
+        uint8_t      *pdata);
+/** @brief VL53L1_RdWord() definition.\n
+ * To be implemented by the developer
+ */
+int8_t VL53L1_RdWord(
+        I2C_Handle i2c,
+        uint16_t      index,
+        uint16_t     *pdata);
+/** @brief VL53L1_RdDWord() definition.\n
+ * To be implemented by the developer
+ */
+int8_t VL53L1_RdDWord(
+        I2C_Handle i2c,
+        uint16_t      index,
+        uint32_t     *pdata);
+/** @brief VL53L1_WaitMs() definition.\n
+ * To be implemented by the developer
+ */
+int8_t VL53L1_WaitMs(
+        I2C_Handle i2c,
+        int32_t       wait_ms);
+
 
 /****************************************
  * PRIVATE define do not edit

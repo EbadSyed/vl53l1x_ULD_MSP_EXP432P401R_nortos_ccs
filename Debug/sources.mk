@@ -126,5 +126,4 @@ GEN_OPTS__QUOTED :=
 SUBDIRS := \
 . \
 core \
-platform \
 
