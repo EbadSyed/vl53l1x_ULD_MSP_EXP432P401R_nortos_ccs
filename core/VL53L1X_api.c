@@ -238,7 +238,7 @@ int8_t VL53L1_WrWord(I2C_Handle i2c, uint16_t index, uint16_t data) {
     writeBuffer[2]=(data >> 8) & 0xFF;
     writeBuffer[3]=data  & 0xFF;
 
-    i2cTransaction.slaveAddress = 0x52;
+    i2cTransaction.slaveAddress = 0x29;
     i2cTransaction.writeBuf = writeBuffer;  /* Buffer to be written */
     i2cTransaction.writeCount = 4;          /* Number of bytes to be written */
     i2cTransaction.readBuf = NULL;    /* Buffer to be read */
@@ -261,7 +261,7 @@ int8_t VL53L1_WrDWord(I2C_Handle i2c, uint16_t index, uint32_t data) {
     writeBuffer[4]=(data >> 8) & 0xFF;
     writeBuffer[5]=data & 0xFF;
 
-    i2cTransaction.slaveAddress = 0x52;
+    i2cTransaction.slaveAddress = 0x29;
     i2cTransaction.writeBuf = writeBuffer;  /* Buffer to be written */
     i2cTransaction.writeCount = 6;          /* Number of bytes to be written */
     i2cTransaction.readBuf = NULL;    /* Buffer to be read */

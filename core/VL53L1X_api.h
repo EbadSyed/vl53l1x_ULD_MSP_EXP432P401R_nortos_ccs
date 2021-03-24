@@ -206,10 +206,6 @@ int8_t VL53L1_WaitMs(
         int32_t       wait_ms);
 
 
-/****************************************
- * PRIVATE define do not edit
- ****************************************/
-
 /**
  *  @brief defines SW Version
  */

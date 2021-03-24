@@ -63,6 +63,8 @@ const uint_least8_t Display_count = 1;
 GPIO_PinConfig gpioPinConfigs[] = {
     /* CONFIG_GPIO_LED_0 : LaunchPad LED 1 Red */
     GPIOMSP432_P1_0 | GPIO_CFG_OUT_STD | GPIO_CFG_OUT_STR_MED | GPIO_CFG_OUT_LOW,
+    /* CONFIG_GPIO_0 */
+    GPIOMSP432_P4_5 | GPIO_CFG_IN_NOPULL | GPIO_CFG_IN_INT_NONE,
 };
 
 /*
@@ -76,6 +78,8 @@ GPIO_PinConfig gpioPinConfigs[] = {
 GPIO_CallbackFxn gpioCallbackFunctions[] = {
     /* CONFIG_GPIO_LED_0 : LaunchPad LED 1 Red */
     NULL,
+    /* CONFIG_GPIO_0 */
+    NULL,
 };
 
 /*
@@ -84,8 +88,8 @@ GPIO_CallbackFxn gpioCallbackFunctions[] = {
 const GPIOMSP432_Config GPIOMSP432_config = {
     .pinConfigs = (GPIO_PinConfig *)gpioPinConfigs,
     .callbacks = (GPIO_CallbackFxn *)gpioCallbackFunctions,
-    .numberOfPinConfigs = 1,
-    .numberOfCallbacks = 1,
+    .numberOfPinConfigs = 2,
+    .numberOfCallbacks = 2,
     .intPriority = (~0)
 };
 
@@ -201,7 +205,7 @@ static const UARTMSP432_HWAttrsV1 uartMSP432HWAttrs[CONFIG_UART_COUNT] = {
     .baudrateLUT        = uartMSP432Baudrates,
     .ringBufPtr         = uartMSP432RingBuffer0,
     .ringBufSize        = sizeof(uartMSP432RingBuffer0),
-    .rxPin              = UARTMSP432_P1_2_UCA0RXD,
+    .rxPin              = 0,
     .txPin              = UARTMSP432_P1_3_UCA0TXD,
     .errorFxn           = NULL
   },
@@ -216,6 +220,42 @@ const UART_Config UART_config[CONFIG_UART_COUNT] = {
 };
 
 const uint_least8_t UART_count = CONFIG_UART_COUNT;
+
+
+/*
+ *  =============================== Watchdog ===============================
+ */
+
+#include <ti/drivers/Watchdog.h>
+#include <ti/drivers/watchdog/WatchdogMSP432.h>
+#include <ti/devices/msp432p4xx/driverlib/interrupt.h>
+#include <ti/devices/msp432p4xx/driverlib/wdt_a.h>
+
+#define CONFIG_WATCHDOG_COUNT 1
+
+WatchdogMSP432_Object watchdogMSP432Objects[CONFIG_WATCHDOG_COUNT];
+
+const WatchdogMSP432_HWAttrs watchdogMSP432HWAttrs[CONFIG_WATCHDOG_COUNT] = {
+    /* CONFIG_WATCHDOG_0: period = 1000 */
+    {
+        .baseAddr       = WDT_A_BASE,
+        .intNum         = INT_WDT_A,
+        .intPriority    = 0x20,
+        .clockSource    = WDT_A_CLOCKSOURCE_ACLK,
+        .clockDivider   = WDT_A_CLOCKDIVIDER_32K
+    },
+};
+
+const Watchdog_Config Watchdog_config[CONFIG_WATCHDOG_COUNT] = {
+    /* CONFIG_WATCHDOG_0 */
+    {
+        .fxnTablePtr = &WatchdogMSP432_fxnTable,
+        .object      = &watchdogMSP432Objects[0],
+        .hwAttrs     = &watchdogMSP432HWAttrs[0]
+    }
+};
+
+const uint_least8_t Watchdog_count = CONFIG_WATCHDOG_COUNT;
 
 
 #include <ti/drivers/Board.h>

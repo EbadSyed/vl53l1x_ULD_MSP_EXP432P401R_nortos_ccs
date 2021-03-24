@@ -32,6 +32,8 @@ extern "C" {
 
 /* P1.0, LaunchPad LED 1 Red */
 #define CONFIG_GPIO_LED_0           0
+/* P4.5 */
+#define CONFIG_GPIO_0               1
 
 /* LEDs are active high */
 #define CONFIG_GPIO_LED_ON  (1)
@@ -69,10 +71,17 @@ extern "C" {
 
 /*
  *  TX: P1.3
- *  RX: P1.2
+ *  RX: Unassigned
  *  XDS110 UART
  */
 #define CONFIG_UART_0               0
+
+
+/*
+ *  ======== Watchdog ========
+ */
+
+#define CONFIG_WATCHDOG_0           0
 
 
 /*

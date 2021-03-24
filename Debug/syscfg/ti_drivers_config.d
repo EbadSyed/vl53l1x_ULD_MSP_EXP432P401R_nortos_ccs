@@ -45,6 +45,9 @@ syscfg/ti_drivers_config.obj: /home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/s
 syscfg/ti_drivers_config.obj: /home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/dpl/ClockP.h
 syscfg/ti_drivers_config.obj: /home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/utils/RingBuf.h
 syscfg/ti_drivers_config.obj: /home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/msp432p4xx/driverlib/uart.h
+syscfg/ti_drivers_config.obj: /home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/Watchdog.h
+syscfg/ti_drivers_config.obj: /home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/watchdog/WatchdogMSP432.h
+syscfg/ti_drivers_config.obj: /home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/msp432p4xx/driverlib/wdt_a.h
 syscfg/ti_drivers_config.obj: /home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/Board.h
 
 syscfg/ti_drivers_config.c: 
@@ -92,4 +95,7 @@ syscfg/ti_drivers_config.h:
 /home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/dpl/ClockP.h: 
 /home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/utils/RingBuf.h: 
 /home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/msp432p4xx/driverlib/uart.h: 
+/home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/Watchdog.h: 
+/home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/watchdog/WatchdogMSP432.h: 
+/home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/msp432p4xx/driverlib/wdt_a.h: 
 /home/ebad/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/Board.h: 
