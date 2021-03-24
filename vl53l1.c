@@ -46,6 +46,18 @@
 
 #include "core/VL53L1X_api.h"
 
+uint8_t roiCenter[4][4] = {
+    {145, 177, 209, 241},
+    {149, 181, 213, 245},
+    {110, 78, 46, 14},
+    {106, 74, 42, 18}
+};
+
+uint16_t roiX = 4;
+uint16_t roiY = 4;
+
+uint16_t distances[4][4];
+
 
 /*
  *  ======== mainThread ========
@@ -99,8 +111,11 @@ void *mainThread(void *arg0)
 
     /* Change Timing Budget if Needed */
 
-//    VL53L1X_SetTimingBudgetInMs(i2c1,50);
-//    VL53L1X_SetInterMeasurementInMs(i2c1,47);
+    //Predefined values = 15, 20, 33, 50, 100(default), 200, 500.
+    VL53L1X_SetTimingBudgetInMs(i2c1,100);
+    // Intermeasurement is always less than timing budget
+    VL53L1X_SetInterMeasurementInMs(i2c1,97);
+    VL53L1X_SetROI(i2c1,roiX,roiY);
 
     /* Display Timing Budget */
     uint16_t timingBudget;
@@ -111,31 +126,45 @@ void *mainThread(void *arg0)
     VL53L1X_GetInterMeasurementInMs(i2c1,&interMeasurement);
     Display_printf(display, 0, 0, "InterMeasurement in ms : %d" ,interMeasurement);
 
-    VL53L1X_StartRanging(i2c1);
+
 
     GPIO_write(CONFIG_GPIO_LED_0, CONFIG_GPIO_LED_ON);
 
     Display_printf(display, 0, 0, "Program Fixed Check\n");
 
+    VL53L1X_StartRanging(i2c1);
 
     while (1) {
 
         Watchdog_clear(watchdogHandle);
         uint8_t dataReady = false;
 
-        while(!dataReady) {
-            VL53L1X_CheckForDataReady(i2c1,&dataReady);
-            usleep(5);
+        int x,y;
+
+        for(y=0; y<4; y++)
+        {
+            for(x=0; x<4; x++)
+            {
+                VL53L1X_SetROICenter(i2c1,roiCenter[y][x]);
+                Watchdog_clear(watchdogHandle);
+
+                dataReady = false;
+                while(!dataReady)
+                {
+                    VL53L1X_CheckForDataReady(i2c1,&dataReady);
+                    usleep(5);
+                }
+                VL53L1X_GetDistance(i2c1,&distances[y][x]);
+
+                // After reading the results reset the interrupt to be able to take another measurement
+                VL53L1X_ClearInterrupt(i2c1);
+            }
 
         }
 
-        // Get the results
-        uint16_t distance;
-        VL53L1X_GetDistance(i2c1,&distance);
-        Display_printf(display, 0, 0, "Distance in mm: %d" ,distance);
+        Display_printf(display, 0, 0, " %d %d %d %d \n %d %d %d %d \n %d %d %d %d \n %d %d %d %d \n" ,distances[0][0],distances[0][1],distances[0][2],distances[0][3],distances[1][0],distances[1][1],distances[1][2],distances[1][3],distances[2][0],distances[2][1],distances[2][2],distances[2][3],distances[3][0],distances[3][1],distances[3][2],distances[3][3]);
 
-        // After reading the results reset the interrupt to be able to take another measurement
-        VL53L1X_ClearInterrupt(i2c1);
+
 
         /* Toggle LED */
         GPIO_toggle(CONFIG_GPIO_LED_0);
