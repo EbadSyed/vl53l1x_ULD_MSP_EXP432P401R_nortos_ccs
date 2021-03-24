@@ -42,6 +42,8 @@
 /* Driver configuration */
 #include <ti/drivers/Board.h>
 
+#include "msp432p401r.h"
+
 extern void *mainThread(void *arg0);
 
 /*
@@ -49,6 +51,12 @@ extern void *mainThread(void *arg0);
  */
 int main(void)
 {
+    /* Reset SDA and SCL Lines if Stuck */
+    P6->SEL0 &= ~(BIT4|BIT5);
+    P6->SEL1 &= ~(BIT4|BIT5);
+    P6->OUT &= ~(BIT4|BIT5);
+    P6->DIR |= (BIT4|BIT5);
+
     /* Call driver init functions */
     Board_init();
 

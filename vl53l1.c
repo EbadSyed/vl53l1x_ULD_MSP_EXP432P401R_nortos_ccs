@@ -57,7 +57,7 @@ void *mainThread(void *arg0)
     Watchdog_init();
 
     GPIO_init();
-    I2C_init();
+
     Display_init();
 
     /* Open a Watchdog driver instance */
@@ -78,7 +78,9 @@ void *mainThread(void *arg0)
 
     Display_printf(display, 0, 0, "System Reset \n");
 
+
     /* Create I2C for usage */
+    I2C_init();
     I2C_Params_init(&i2cParams);
     i2cParams.bitRate = I2C_1000kHz;
 

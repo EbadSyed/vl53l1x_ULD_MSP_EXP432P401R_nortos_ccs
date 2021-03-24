@@ -63,8 +63,6 @@ const uint_least8_t Display_count = 1;
 GPIO_PinConfig gpioPinConfigs[] = {
     /* CONFIG_GPIO_LED_0 : LaunchPad LED 1 Red */
     GPIOMSP432_P1_0 | GPIO_CFG_OUT_STD | GPIO_CFG_OUT_STR_MED | GPIO_CFG_OUT_LOW,
-    /* CONFIG_GPIO_0 */
-    GPIOMSP432_P4_5 | GPIO_CFG_IN_NOPULL | GPIO_CFG_IN_INT_NONE,
 };
 
 /*
@@ -78,8 +76,6 @@ GPIO_PinConfig gpioPinConfigs[] = {
 GPIO_CallbackFxn gpioCallbackFunctions[] = {
     /* CONFIG_GPIO_LED_0 : LaunchPad LED 1 Red */
     NULL,
-    /* CONFIG_GPIO_0 */
-    NULL,
 };
 
 /*
@@ -88,8 +84,8 @@ GPIO_CallbackFxn gpioCallbackFunctions[] = {
 const GPIOMSP432_Config GPIOMSP432_config = {
     .pinConfigs = (GPIO_PinConfig *)gpioPinConfigs,
     .callbacks = (GPIO_CallbackFxn *)gpioCallbackFunctions,
-    .numberOfPinConfigs = 2,
-    .numberOfCallbacks = 2,
+    .numberOfPinConfigs = 1,
+    .numberOfCallbacks = 1,
     .intPriority = (~0)
 };
 
