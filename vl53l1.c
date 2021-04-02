@@ -113,8 +113,8 @@ void *mainThread(void *arg0)
 
     //Predefined values = 15, 20, 33, 50, 100(default), 200, 500.
     VL53L1X_SetTimingBudgetInMs(i2c1,100);
-    // Intermeasurement is always less than timing budget
-    VL53L1X_SetInterMeasurementInMs(i2c1,97);
+    // Intermeasurement is always greater than timing budget
+    VL53L1X_SetInterMeasurementInMs(i2c1,102);
     VL53L1X_SetROI(i2c1,roiX,roiY);
 
     /* Display Timing Budget */
